@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace MongoDB.Driver.Linq
-{    
+{
     /// <summary>
-     /// Asynchronous enumeration of documents.
-     /// </summary>
+    /// Asynchronous enumeration of documents.
+    /// </summary>
     public static class AsyncEnumerable
     {
         /// <summary>
