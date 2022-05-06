@@ -10,6 +10,7 @@ The size of the batch can be controller by `BatchSize` property of e.g. `Aggrega
 
 ## Usage
 
+- Add [MongoDB.Driver.Linq.AsyncEnumerable](https://www.nuget.org/packages/MongoDB.Driver.Linq.AsyncEnumerable/) NuGet package to the project
 - Include types in `MongoDB.Driver.Linq` namespace by `using MongoDB.Driver.Linq`
 - Call the `ToAsyncEnumerable()` extension for either `IAsyncCursor` or `IAsyncCursorSource`
 - Asynchronously iterate through elements returned by `ToAsyncEnumerable()`
