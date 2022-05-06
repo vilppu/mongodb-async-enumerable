@@ -3,16 +3,35 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace MongoDB.Driver.Linq
-{
+{    
     /// <summary>
-    /// Asynchronous enumeration of documents.
-    /// </summary>
+     /// Asynchronous enumeration of documents.
+     /// </summary>
     public static class AsyncEnumerable
     {
         /// <summary>
+        /// Provides asynchronous iteration over all document returned by cursor returned by a <paramref name="source"/>.
+        /// </summary>
+        /// <typeparam name="TDocument">The type of the documents to be iterated.</typeparam>
+        /// <param name="source">The cursor source.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Async-enumerable that iterates over all document returned by cursor returned by cursor source.
+        public static async IAsyncEnumerable<TDocument> ToAsyncEnumerable<TDocument>(
+            this IAsyncCursorSource<TDocument> source,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            using var cursor = await source.ToCursorAsync(cancellationToken).ConfigureAwait(false);
+
+            await foreach (var document in cursor.ToAsyncEnumerable(cancellationToken))
+            {
+                yield return document;
+            }
+        }
+
+        /// <summary>
         /// Provides asynchronous iteration over all document returned by <paramref name="source"/>.
         /// </summary>
-        /// <typeparam name="TDocument">The type of the document.</typeparam>
+        /// <typeparam name="TDocument">The type of the documents to be iterated.</typeparam>
         /// <param name="source">The source cursor.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Async-enumerable that iterates over all document returned by cursor.</returns>
@@ -29,4 +48,5 @@ namespace MongoDB.Driver.Linq
             }
         }
     }
+
 }
